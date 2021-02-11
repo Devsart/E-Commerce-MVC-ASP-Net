@@ -11,5 +11,18 @@ namespace CasaDoCodigo.Repositories
         public CadastroRepository(ApplicationContext contexto) : base(contexto)
         {
         }
+
+        public Cadastro Update(int cadastroId, Cadastro novoCadastro)
+        {
+            var cadastroDB = dbSet.Where(c => c.Id == cadastroId).SingleOrDefault();
+            if(cadastroDB == null)
+            {
+                throw new ArgumentException("Cadastro não encontrado!");
+            }
+            cadastroDB.Update(novoCadastro);
+            contexto.SaveChanges();
+
+            return cadastroDB;
+        }
     }
 }
